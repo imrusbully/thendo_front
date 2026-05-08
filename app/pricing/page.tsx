@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { useAuth } from '@/lib/auth-context'
@@ -16,13 +15,12 @@ const plans = [
     name: 'Free',
     code: 'FREE',
     price: '$0',
-    description: 'Perfect for getting started',
+    description: 'Start exploring with basics',
     features: [
-      '100 credits per month',
-      'Basic analytics',
+      '100 personalized suggestions per month',
+      'Basic activity categories',
+      'Save up to 10 favorites',
       'Email support',
-      'API access',
-      '1 team member',
     ],
     cta: 'Get Started',
     popular: false,
@@ -30,21 +28,40 @@ const plans = [
   {
     name: 'Premium',
     code: 'PREMIUM',
-    price: '$29',
+    price: '$9',
     period: '/month',
-    description: 'For growing teams and businesses',
+    description: 'Unlock the full experience',
     features: [
-      'Unlimited credits',
-      'Advanced analytics',
+      'Unlimited personalized suggestions',
+      'All activity categories',
+      'Unlimited favorites & lists',
       'Priority support',
-      'Full API access',
-      'Unlimited team members',
-      'Custom integrations',
-      'SSO authentication',
-      'Dedicated account manager',
+      'Mood-based recommendations',
+      'Social activity matching',
+      'Exclusive local experiences',
+      'Early access to new features',
     ],
     cta: 'Upgrade to Premium',
     popular: true,
+  },
+]
+
+const faqs = [
+  {
+    question: 'How does Thendo personalize recommendations?',
+    answer: 'Thendo learns from your preferences, past activities, mood, and feedback to suggest experiences that match your unique style. The more you use it, the better it gets.',
+  },
+  {
+    question: 'Can I switch plans anytime?',
+    answer: 'Yes! You can upgrade to Premium or downgrade to Free at any time. Changes take effect immediately.',
+  },
+  {
+    question: 'What payment methods do you accept?',
+    answer: 'We accept all major credit cards through our secure payment processor, Stripe. Your payment information is never stored on our servers.',
+  },
+  {
+    question: 'Is there a free trial for Premium?',
+    answer: 'Our Free plan lets you explore all core features. Try it out, and upgrade to Premium when you want unlimited access.',
   },
 ]
 
@@ -79,125 +96,107 @@ export default function PricingPage() {
       <main className="flex-1 pt-32 pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
-              Simple, transparent pricing
+            <h1 className="font-serif text-4xl font-medium tracking-tight sm:text-5xl">
+              Simple, honest pricing
             </h1>
-            <p className="mt-4 text-pretty text-lg text-muted-foreground">
-              Choose the plan that works best for you. Upgrade or downgrade at any time.
+            <p className="mt-4 text-lg text-muted-foreground">
+              Start free. Upgrade when you are ready for more.
             </p>
           </div>
 
-          <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-2">
+          <div className="mx-auto mt-16 grid max-w-4xl gap-8 lg:grid-cols-2">
             {plans.map((plan) => {
               const isCurrentPlan = subscription?.plan === plan.code
               
               return (
-                <Card
+                <div
                   key={plan.name}
-                  className={`relative flex flex-col overflow-hidden ${
+                  className={`relative flex flex-col rounded-3xl border p-8 ${
                     plan.popular
-                      ? 'border-primary shadow-lg shadow-primary/10'
-                      : 'border-border/50'
+                      ? 'border-primary bg-card shadow-lg'
+                      : 'border-border bg-card/50'
                   }`}
                 >
                   {plan.popular && (
-                    <div className="absolute right-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+                    <div className="absolute -top-3 left-8 rounded-full bg-primary px-4 py-1 text-xs font-medium text-primary-foreground">
                       Most Popular
                     </div>
                   )}
                   
-                  <CardHeader>
-                    <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                    <CardDescription>{plan.description}</CardDescription>
-                    <div className="mt-4">
-                      <span className="text-4xl font-bold">{plan.price}</span>
-                      {plan.period && (
-                        <span className="text-muted-foreground">{plan.period}</span>
-                      )}
-                    </div>
-                  </CardHeader>
+                  <div className="mb-6">
+                    <h2 className="font-serif text-2xl font-medium">{plan.name}</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">{plan.description}</p>
+                  </div>
                   
-                  <CardContent className="flex flex-1 flex-col">
-                    <ul className="flex-1 space-y-3">
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3">
-                          <Check className="h-5 w-5 shrink-0 text-primary" />
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <div className="mt-8">
-                      {plan.code === 'FREE' ? (
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="w-full"
-                          disabled={isCurrentPlan}
-                        >
-                          <Link href="/login">
-                            {isCurrentPlan ? 'Current Plan' : plan.cta}
-                          </Link>
-                        </Button>
-                      ) : (
-                        <Button
-                          className="w-full"
-                          onClick={handleUpgrade}
-                          disabled={isLoading || isCurrentPlan}
-                        >
-                          {isLoading ? (
-                            <>
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                              Processing...
-                            </>
-                          ) : isCurrentPlan ? (
-                            'Current Plan'
-                          ) : (
-                            plan.cta
-                          )}
-                        </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                  <div className="mb-8">
+                    <span className="font-serif text-5xl font-medium">{plan.price}</span>
+                    {plan.period && (
+                      <span className="text-muted-foreground">{plan.period}</span>
+                    )}
+                  </div>
+                  
+                  <ul className="mb-8 flex-1 space-y-4">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <Check className="h-3 w-3 text-primary" />
+                        </div>
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <div>
+                    {plan.code === 'FREE' ? (
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="h-12 w-full rounded-xl"
+                        disabled={isCurrentPlan}
+                      >
+                        <Link href="/login">
+                          {isCurrentPlan ? 'Current Plan' : plan.cta}
+                        </Link>
+                      </Button>
+                    ) : (
+                      <Button
+                        className="h-12 w-full rounded-xl"
+                        onClick={handleUpgrade}
+                        disabled={isLoading || isCurrentPlan}
+                      >
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Processing...
+                          </>
+                        ) : isCurrentPlan ? (
+                          'Current Plan'
+                        ) : (
+                          plan.cta
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                </div>
               )
             })}
           </div>
 
           {/* FAQ Section */}
-          <div className="mx-auto mt-24 max-w-3xl">
-            <h2 className="text-center text-2xl font-bold sm:text-3xl">
-              Frequently asked questions
+          <div className="mx-auto mt-24 max-w-2xl">
+            <h2 className="text-center font-serif text-2xl font-medium sm:text-3xl">
+              Questions? We have answers.
             </h2>
             
-            <div className="mt-12 space-y-8">
-              <div>
-                <h3 className="text-lg font-semibold">Can I change plans later?</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold">What payment methods do you accept?</h3>
-                <p className="mt-2 text-muted-foreground">
-                  We accept all major credit cards through our secure payment processor, Stripe.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold">Is there a free trial?</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Our Free plan lets you explore all core features. Upgrade to Premium when you need more.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold">What happens when I run out of credits?</h3>
-                <p className="mt-2 text-muted-foreground">
-                  Free plan users receive 100 credits monthly. Premium users get unlimited credits.
-                </p>
-              </div>
+            <div className="mt-12 space-y-6">
+              {faqs.map((faq) => (
+                <div key={faq.question} className="rounded-2xl border border-border bg-card p-6">
+                  <h3 className="font-medium">{faq.question}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
