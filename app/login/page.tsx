@@ -3,11 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { api } from '@/lib/api'
-import { ArrowLeft, Loader2, Mail, KeyRound, Sparkles } from 'lucide-react'
 
 type Step = 'email' | 'otp'
 
@@ -69,87 +65,89 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-background">
       {/* Left side - Form */}
-      <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-20">
+      <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-16 xl:px-24">
         <div className="mx-auto w-full max-w-sm">
-          <div className="mb-10">
-            <Link href="/" className="inline-flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
-                <span className="font-serif text-lg font-medium text-primary-foreground">t</span>
+          <div className="mb-8">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
+                <span className="text-background font-bold text-sm">T</span>
               </div>
-              <span className="font-serif text-xl">thendo</span>
+              <span className="font-semibold text-lg text-foreground">Thendo</span>
             </Link>
           </div>
 
           <div className="mb-8">
-            <h1 className="font-serif text-3xl font-medium">
-              {step === 'email' ? 'Welcome back' : 'Check your email'}
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+              {step === 'email' ? 'Welcome back' : 'Enter verification code'}
             </h1>
-            <p className="mt-2 text-muted-foreground">
+            <p className="mt-2 text-sm text-muted-foreground">
               {step === 'email'
-                ? 'Enter your email to continue your journey'
-                : `We sent a code to ${email}`}
+                ? 'Sign in to continue to your account'
+                : `We sent a 6-digit code to ${email}`}
             </p>
           </div>
 
           {step === 'email' ? (
-            <form onSubmit={handleEmailSubmit} className="space-y-6">
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email
+                <label htmlFor="email" className="text-sm font-medium text-foreground">
+                  Email address
                 </label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-12 rounded-xl pl-11"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full h-11 px-4 bg-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent transition-all"
+                  required
+                  disabled={isLoading}
+                />
               </div>
 
               {error && (
                 <p className="text-sm text-destructive">{error}</p>
               )}
 
-              <Button type="submit" className="h-12 w-full rounded-xl" disabled={isLoading}>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full h-11 px-4 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
                     Sending code...
                   </>
                 ) : (
-                  'Continue'
+                  'Continue with email'
                 )}
-              </Button>
+              </button>
             </form>
           ) : (
-            <form onSubmit={handleOtpSubmit} className="space-y-6">
+            <form onSubmit={handleOtpSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="code" className="text-sm font-medium">
+                <label htmlFor="code" className="text-sm font-medium text-foreground">
                   Verification code
                 </label>
-                <div className="relative">
-                  <KeyRound className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="code"
-                    type="text"
-                    placeholder="Enter 6-digit code"
-                    value={otpCode}
-                    onChange={(e) => setOtpCode(e.target.value)}
-                    className="h-12 rounded-xl pl-11 text-center tracking-[0.5em]"
-                    required
-                    disabled={isLoading}
-                    maxLength={6}
-                  />
-                </div>
-                <p className="text-center text-xs text-muted-foreground">
+                <input
+                  id="code"
+                  type="text"
+                  placeholder="000000"
+                  value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  className="w-full h-11 px-4 bg-background border border-border rounded-lg text-foreground text-center tracking-[0.3em] font-mono placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent transition-all"
+                  required
+                  disabled={isLoading}
+                  maxLength={6}
+                  autoComplete="one-time-code"
+                />
+                <p className="text-xs text-muted-foreground text-center">
                   Code expires in {Math.floor(expiresIn / 60)} minutes
                 </p>
               </div>
@@ -158,53 +156,55 @@ export default function LoginPage() {
                 <p className="text-sm text-destructive">{error}</p>
               )}
 
-              <Button type="submit" className="h-12 w-full rounded-xl" disabled={isLoading}>
+              <button
+                type="submit"
+                disabled={isLoading || otpCode.length !== 6}
+                className="w-full h-11 px-4 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
                     Verifying...
                   </>
                 ) : (
-                  'Verify & Continue'
+                  'Verify and continue'
                 )}
-              </Button>
+              </button>
 
-              <div className="flex items-center justify-between">
-                <Button
+              <div className="flex items-center justify-between pt-2">
+                <button
                   type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="rounded-full"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   onClick={() => {
                     setStep('email')
                     setOtpCode('')
                     setError('')
                   }}
                 >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back
-                </Button>
-                <Button
+                  Change email
+                </button>
+                <button
                   type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="rounded-full"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   onClick={handleResendOtp}
                   disabled={isLoading}
                 >
                   Resend code
-                </Button>
+                </button>
               </div>
             </form>
           )}
 
-          <p className="mt-8 text-center text-xs text-muted-foreground">
+          <p className="mt-8 text-xs text-muted-foreground text-center">
             By continuing, you agree to our{' '}
-            <Link href="#" className="underline hover:text-foreground">
+            <Link href="/terms" className="text-foreground hover:underline">
               Terms
             </Link>{' '}
             and{' '}
-            <Link href="#" className="underline hover:text-foreground">
+            <Link href="/privacy" className="text-foreground hover:underline">
               Privacy Policy
             </Link>
           </p>
@@ -212,20 +212,20 @@ export default function LoginPage() {
       </div>
 
       {/* Right side - Visual */}
-      <div className="hidden flex-1 bg-muted lg:block">
-        <div className="flex h-full flex-col items-center justify-center p-12">
-          <div className="max-w-md text-center">
-            <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10">
-              <Sparkles className="h-10 w-10 text-primary" />
-            </div>
-            <h2 className="font-serif text-2xl font-medium">
-              Your perfect moments await
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted-foreground">
-              Join thousands of explorers discovering personalized activities 
-              and experiences tailored just for them.
-            </p>
+      <div className="hidden lg:flex flex-1 bg-card border-l border-border items-center justify-center p-12">
+        <div className="max-w-md text-center">
+          <div className="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-2xl flex items-center justify-center">
+            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
           </div>
+          <h2 className="text-xl font-semibold text-foreground mb-3">
+            Discover activities you will love
+          </h2>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            Our AI learns your preferences to suggest personalized experiences. 
+            No more endless scrolling or decision fatigue.
+          </p>
         </div>
       </div>
     </div>
