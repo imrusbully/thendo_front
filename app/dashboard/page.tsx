@@ -1,9 +1,7 @@
 'use client'
 
 import { useAuth } from '@/lib/auth-context'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { CreditCard, Sparkles, TrendingUp, ArrowRight, Heart, MapPin, Clock } from 'lucide-react'
 
 export default function DashboardPage() {
   const { user, subscription } = useAuth()
@@ -12,130 +10,132 @@ export default function DashboardPage() {
     {
       name: 'Plan',
       value: subscription?.plan || 'FREE',
-      icon: CreditCard,
-      description: subscription?.status === 'ACTIVE' ? 'Active' : 'Active',
+      description: 'Current plan',
     },
     {
       name: 'Credits',
       value: subscription?.creditBalance?.balance?.toString() || '100',
-      icon: Sparkles,
       description: 'Available this month',
     },
     {
-      name: 'Monthly Limit',
+      name: 'Limit',
       value: subscription?.entitlements?.monthlyCredits?.toString() || '100',
-      icon: TrendingUp,
-      description: 'Credits per month',
+      description: 'Monthly limit',
     },
   ]
 
-  const recentActivity = [
-    { icon: Heart, text: 'Saved "Sunset Hike at Eagle Point"', time: '2 hours ago' },
-    { icon: MapPin, text: 'Discovered new spots in Downtown', time: 'Yesterday' },
-    { icon: Clock, text: 'Completed weekend activity plan', time: '3 days ago' },
-  ]
-
   return (
-    <div className="mx-auto max-w-5xl space-y-8">
+    <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <h1 className="font-serif text-3xl font-medium">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
           Welcome back, {user?.email?.split('@')[0]}
         </h1>
-        <p className="mt-2 text-muted-foreground">
-          Ready to discover your next adventure?
+        <p className="mt-1 text-sm text-muted-foreground">
+          Here is an overview of your account.
         </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      {/* Stats */}
+      <div className="grid sm:grid-cols-3 gap-4">
         {stats.map((stat) => (
-          <div
-            key={stat.name}
-            className="rounded-2xl border border-border bg-card p-6"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">{stat.name}</span>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
-                <stat.icon className="h-5 w-5 text-primary" />
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className="font-serif text-3xl font-medium">{stat.value}</span>
-              <p className="mt-1 text-xs text-muted-foreground">{stat.description}</p>
-            </div>
+          <div key={stat.name} className="p-6 rounded-xl border border-border bg-card">
+            <p className="text-sm text-muted-foreground">{stat.name}</p>
+            <p className="mt-2 text-3xl font-semibold text-foreground">{stat.value}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{stat.description}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* Quick Actions */}
-        <div className="rounded-2xl border border-border bg-card p-6">
-          <h2 className="font-serif text-xl font-medium">Quick Actions</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Manage your account
-          </p>
+        <div className="p-6 rounded-xl border border-border bg-card">
+          <h2 className="text-lg font-semibold text-foreground">Quick Actions</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Manage your account</p>
+          
           <div className="mt-6 space-y-2">
-            <Button asChild variant="outline" className="h-12 w-full justify-between rounded-xl">
-              <Link href="/dashboard/profile">
-                View Profile
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="h-12 w-full justify-between rounded-xl">
-              <Link href="/dashboard/subscription">
-                Manage Subscription
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="h-12 w-full justify-between rounded-xl">
-              <Link href="/pricing">
-                View Plans
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+            <Link
+              href="/dashboard/profile"
+              className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted transition-colors"
+            >
+              <span className="text-sm font-medium text-foreground">View Profile</span>
+              <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+            <Link
+              href="/dashboard/subscription"
+              className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted transition-colors"
+            >
+              <span className="text-sm font-medium text-foreground">Manage Subscription</span>
+              <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+            <Link
+              href="/pricing"
+              className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted transition-colors"
+            >
+              <span className="text-sm font-medium text-foreground">View Plans</span>
+              <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
 
         {/* Recent Activity */}
-        <div className="rounded-2xl border border-border bg-card p-6">
-          <h2 className="font-serif text-xl font-medium">Recent Activity</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Your latest discoveries
-          </p>
+        <div className="p-6 rounded-xl border border-border bg-card">
+          <h2 className="text-lg font-semibold text-foreground">Recent Activity</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Your latest actions</p>
+          
           <div className="mt-6 space-y-4">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-muted">
-                  <activity.icon className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="text-sm">{activity.text}</p>
-                  <p className="text-xs text-muted-foreground">{activity.time}</p>
-                </div>
+            <div className="flex items-start gap-4">
+              <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
               </div>
-            ))}
+              <div>
+                <p className="text-sm text-foreground">Logged in to your account</p>
+                <p className="text-xs text-muted-foreground">Just now</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm text-foreground">Account created</p>
+                <p className="text-xs text-muted-foreground">Welcome to Thendo</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Upgrade CTA */}
       {subscription?.plan === 'FREE' && (
-        <div className="rounded-2xl bg-primary p-8">
-          <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="p-8 rounded-xl bg-foreground">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h2 className="font-serif text-2xl font-medium text-primary-foreground">
-                Unlock unlimited discoveries
+              <h2 className="text-xl font-semibold text-background">
+                Unlock unlimited suggestions
               </h2>
-              <p className="mt-2 text-primary-foreground/80">
-                Upgrade to Premium for unlimited suggestions, mood-based recommendations, and more.
+              <p className="mt-1 text-sm text-background/70">
+                Upgrade to Premium for unlimited access and exclusive features.
               </p>
             </div>
-            <Button asChild variant="secondary" size="lg" className="shrink-0 rounded-full">
-              <Link href="/pricing">
-                Upgrade Now
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-foreground bg-background rounded-lg hover:opacity-90 transition-opacity shrink-0"
+            >
+              Upgrade now
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       )}

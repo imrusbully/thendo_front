@@ -2,8 +2,6 @@
 
 import Link from 'next/link'
 import { useAuth } from '@/lib/auth-context'
-import { Button } from '@/components/ui/button'
-import { User, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 export function Header() {
@@ -11,102 +9,140 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
-            <span className="font-serif text-lg font-medium text-primary-foreground">t</span>
-          </div>
-          <span className="font-serif text-xl">thendo</span>
-        </Link>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          <Link
-            href="/#features"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            How it works
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
+              <span className="text-background font-bold text-sm">T</span>
+            </div>
+            <span className="font-semibold text-lg text-foreground">Thendo</span>
           </Link>
-          <Link
-            href="/pricing"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Pricing
-          </Link>
-        </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          {isLoading ? (
-            <div className="h-9 w-20 animate-pulse rounded-full bg-muted" />
-          ) : isAuthenticated ? (
-            <Button asChild variant="outline" size="sm" className="rounded-full">
-              <Link href="/dashboard">
-                <User className="mr-2 h-4 w-4" />
-                Dashboard
-              </Link>
-            </Button>
-          ) : (
-            <>
-              <Button asChild variant="ghost" size="sm" className="rounded-full">
-                <Link href="/login">Sign In</Link>
-              </Button>
-              <Button asChild size="sm" className="rounded-full">
-                <Link href="/login">Get Started</Link>
-              </Button>
-            </>
-          )}
-        </div>
-
-        <button
-          className="rounded-lg p-2 hover:bg-muted md:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </button>
-      </div>
-
-      {mobileMenuOpen && (
-        <div className="border-b border-border bg-background md:hidden">
-          <nav className="flex flex-col gap-1 p-4">
-            <Link
-              href="/#features"
-              className="rounded-xl px-4 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              onClick={() => setMobileMenuOpen(false)}
+          <div className="hidden md:flex items-center gap-8">
+            <Link 
+              href="/#features" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              How it works
+              Features
             </Link>
-            <Link
-              href="/pricing"
-              className="rounded-xl px-4 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              onClick={() => setMobileMenuOpen(false)}
+            <Link 
+              href="/pricing" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Pricing
             </Link>
-            <div className="my-2 border-t border-border" />
-            {isAuthenticated ? (
+            <Link 
+              href="/#how-it-works" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              How it works
+            </Link>
+          </div>
+
+          <div className="hidden md:flex items-center gap-3">
+            {isLoading ? (
+              <div className="h-9 w-20 animate-pulse rounded-lg bg-muted" />
+            ) : isAuthenticated ? (
               <Link
                 href="/dashboard"
-                className="rounded-xl px-4 py-3 text-sm font-medium transition-colors hover:bg-muted"
-                onClick={() => setMobileMenuOpen(false)}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity"
               >
-                Dashboard
+                <span>Dashboard</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             ) : (
-              <Link
-                href="/login"
-                className="rounded-xl bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground"
+              <>
+                <Link
+                  href="/login"
+                  className="px-4 py-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity"
+                >
+                  Get started
+                </Link>
+              </>
+            )}
+          </div>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-foreground rounded-lg hover:bg-muted transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-border">
+            <div className="flex flex-col gap-1">
+              <Link 
+                href="/#features" 
+                className="px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Get Started
+                Features
               </Link>
-            )}
-          </nav>
-        </div>
-      )}
+              <Link 
+                href="/pricing" 
+                className="px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Pricing
+              </Link>
+              <Link 
+                href="/#how-it-works" 
+                className="px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                How it works
+              </Link>
+              <div className="my-2 border-t border-border" />
+              {isAuthenticated ? (
+                <Link
+                  href="/dashboard"
+                  className="px-4 py-3 text-sm font-medium text-center text-primary-foreground bg-primary rounded-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="px-4 py-3 text-sm font-medium text-center text-foreground border border-border rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="px-4 py-3 text-sm font-medium text-center text-primary-foreground bg-primary rounded-lg"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Get started
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
     </header>
   )
 }

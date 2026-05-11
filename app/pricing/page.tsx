@@ -2,12 +2,10 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { useAuth } from '@/lib/auth-context'
 import { api } from '@/lib/api'
-import { Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 
 const plans = [
@@ -15,14 +13,14 @@ const plans = [
     name: 'Free',
     code: 'FREE',
     price: '$0',
-    description: 'Start exploring with basics',
+    description: 'Get started with the basics',
     features: [
-      '100 personalized suggestions per month',
-      'Basic activity categories',
+      '100 suggestions per month',
+      'Basic categories',
       'Save up to 10 favorites',
       'Email support',
     ],
-    cta: 'Get Started',
+    cta: 'Get started',
     popular: false,
   },
   {
@@ -32,14 +30,14 @@ const plans = [
     period: '/month',
     description: 'Unlock the full experience',
     features: [
-      'Unlimited personalized suggestions',
+      'Unlimited suggestions',
       'All activity categories',
-      'Unlimited favorites & lists',
+      'Unlimited favorites',
       'Priority support',
       'Mood-based recommendations',
       'Social activity matching',
-      'Exclusive local experiences',
-      'Early access to new features',
+      'Exclusive experiences',
+      'Early access to features',
     ],
     cta: 'Upgrade to Premium',
     popular: true,
@@ -49,19 +47,19 @@ const plans = [
 const faqs = [
   {
     question: 'How does Thendo personalize recommendations?',
-    answer: 'Thendo learns from your preferences, past activities, mood, and feedback to suggest experiences that match your unique style. The more you use it, the better it gets.',
+    answer: 'Thendo learns from your preferences, past activities, and feedback to suggest experiences that match your style. The more you use it, the better it gets.',
   },
   {
     question: 'Can I switch plans anytime?',
-    answer: 'Yes! You can upgrade to Premium or downgrade to Free at any time. Changes take effect immediately.',
+    answer: 'Yes. You can upgrade or downgrade at any time. Changes take effect immediately.',
   },
   {
     question: 'What payment methods do you accept?',
-    answer: 'We accept all major credit cards through our secure payment processor, Stripe. Your payment information is never stored on our servers.',
+    answer: 'We accept all major credit cards through Stripe. Your payment information is never stored on our servers.',
   },
   {
-    question: 'Is there a free trial for Premium?',
-    answer: 'Our Free plan lets you explore all core features. Try it out, and upgrade to Premium when you want unlimited access.',
+    question: 'Is there a free trial?',
+    answer: 'Our Free plan lets you explore core features with no time limit. Upgrade to Premium when you want unlimited access.',
   },
 ]
 
@@ -90,91 +88,98 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
 
       <main className="flex-1 pt-32 pb-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h1 className="font-serif text-4xl font-medium tracking-tight sm:text-5xl">
-              Simple, honest pricing
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
+              Simple pricing
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Start free. Upgrade when you are ready for more.
+            <p className="mt-4 text-muted-foreground">
+              Start free. Upgrade when you need more.
             </p>
           </div>
 
-          <div className="mx-auto mt-16 grid max-w-4xl gap-8 lg:grid-cols-2">
+          <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {plans.map((plan) => {
               const isCurrentPlan = subscription?.plan === plan.code
               
               return (
                 <div
                   key={plan.name}
-                  className={`relative flex flex-col rounded-3xl border p-8 ${
+                  className={`relative flex flex-col rounded-xl border p-8 ${
                     plan.popular
-                      ? 'border-primary bg-card shadow-lg'
-                      : 'border-border bg-card/50'
+                      ? 'border-foreground bg-card'
+                      : 'border-border bg-card'
                   }`}
                 >
                   {plan.popular && (
-                    <div className="absolute -top-3 left-8 rounded-full bg-primary px-4 py-1 text-xs font-medium text-primary-foreground">
-                      Most Popular
+                    <div className="absolute -top-3 left-6 px-3 py-1 text-xs font-medium text-primary-foreground bg-primary rounded-full">
+                      Popular
                     </div>
                   )}
                   
                   <div className="mb-6">
-                    <h2 className="font-serif text-2xl font-medium">{plan.name}</h2>
+                    <h2 className="text-xl font-semibold text-foreground">{plan.name}</h2>
                     <p className="mt-1 text-sm text-muted-foreground">{plan.description}</p>
                   </div>
                   
-                  <div className="mb-8">
-                    <span className="font-serif text-5xl font-medium">{plan.price}</span>
+                  <div className="mb-6">
+                    <span className="text-4xl font-semibold text-foreground">{plan.price}</span>
                     {plan.period && (
                       <span className="text-muted-foreground">{plan.period}</span>
                     )}
                   </div>
                   
-                  <ul className="mb-8 flex-1 space-y-4">
+                  <ul className="mb-8 flex-1 space-y-3">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
-                        <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                          <Check className="h-3 w-3 text-primary" />
-                        </div>
-                        <span className="text-sm">{feature}</span>
+                        <svg className="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-sm text-foreground">{feature}</span>
                       </li>
                     ))}
                   </ul>
                   
                   <div>
                     {plan.code === 'FREE' ? (
-                      <Button
-                        asChild
-                        variant="outline"
-                        className="h-12 w-full rounded-xl"
-                        disabled={isCurrentPlan}
+                      <Link
+                        href="/login"
+                        className={`inline-flex items-center justify-center w-full h-11 px-4 text-sm font-medium border border-border rounded-lg transition-colors ${
+                          isCurrentPlan 
+                            ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+                            : 'text-foreground hover:bg-muted'
+                        }`}
                       >
-                        <Link href="/login">
-                          {isCurrentPlan ? 'Current Plan' : plan.cta}
-                        </Link>
-                      </Button>
+                        {isCurrentPlan ? 'Current plan' : plan.cta}
+                      </Link>
                     ) : (
-                      <Button
-                        className="h-12 w-full rounded-xl"
+                      <button
                         onClick={handleUpgrade}
                         disabled={isLoading || isCurrentPlan}
+                        className={`inline-flex items-center justify-center w-full h-11 px-4 text-sm font-medium rounded-lg transition-all ${
+                          isCurrentPlan
+                            ? 'bg-muted text-muted-foreground cursor-not-allowed'
+                            : 'text-primary-foreground bg-primary hover:opacity-90'
+                        }`}
                       >
                         {isLoading ? (
                           <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            <svg className="w-4 h-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
                             Processing...
                           </>
                         ) : isCurrentPlan ? (
-                          'Current Plan'
+                          'Current plan'
                         ) : (
                           plan.cta
                         )}
-                      </Button>
+                      </button>
                     )}
                   </div>
                 </div>
@@ -182,17 +187,17 @@ export default function PricingPage() {
             })}
           </div>
 
-          {/* FAQ Section */}
-          <div className="mx-auto mt-24 max-w-2xl">
-            <h2 className="text-center font-serif text-2xl font-medium sm:text-3xl">
-              Questions? We have answers.
+          {/* FAQ */}
+          <div className="max-w-2xl mx-auto mt-24">
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-12">
+              Frequently asked questions
             </h2>
             
-            <div className="mt-12 space-y-6">
+            <div className="space-y-4">
               {faqs.map((faq) => (
-                <div key={faq.question} className="rounded-2xl border border-border bg-card p-6">
-                  <h3 className="font-medium">{faq.question}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <div key={faq.question} className="p-6 rounded-xl border border-border bg-card">
+                  <h3 className="font-medium text-foreground">{faq.question}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>

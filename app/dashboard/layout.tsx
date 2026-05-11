@@ -1,25 +1,38 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { LayoutDashboard, User, CreditCard, LogOut, Menu, X, Settings, Compass } from 'lucide-react'
-import { useState } from 'react'
 
 const navigation = [
-  { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Profile', href: '/dashboard/profile', icon: User },
-  { name: 'Subscription', href: '/dashboard/subscription', icon: CreditCard },
+  { 
+    name: 'Overview', 
+    href: '/dashboard',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+      </svg>
+    )
+  },
+  { 
+    name: 'Profile', 
+    href: '/dashboard/profile',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    )
+  },
+  { 
+    name: 'Subscription', 
+    href: '/dashboard/subscription',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+      </svg>
+    )
+  },
 ]
 
 export default function DashboardLayout({
@@ -46,7 +59,10 @@ export default function DashboardLayout({
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        <svg className="w-8 h-8 animate-spin text-foreground" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+        </svg>
       </div>
     )
   }
@@ -60,29 +76,29 @@ export default function DashboardLayout({
       {/* Sidebar - Desktop */}
       <aside className="hidden w-64 shrink-0 border-r border-border bg-card lg:block">
         <div className="flex h-full flex-col">
-          <div className="flex h-16 items-center gap-2.5 border-b border-border px-6">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
-                <span className="font-serif text-lg font-medium text-primary-foreground">t</span>
+          <div className="flex h-16 items-center gap-2 border-b border-border px-6">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
+                <span className="text-background font-bold text-sm">T</span>
               </div>
-              <span className="font-serif text-xl">thendo</span>
+              <span className="font-semibold text-lg text-foreground">Thendo</span>
             </Link>
           </div>
 
-          <nav className="flex-1 space-y-1 p-4">
+          <nav className="flex-1 p-4 space-y-1">
             {navigation.map((item) => {
               const isActive = pathname === item.href
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors ${
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
                     isActive
-                      ? 'bg-primary/10 font-medium text-primary'
+                      ? 'bg-foreground text-background font-medium'
                       : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                   }`}
                 >
-                  <item.icon className="h-5 w-5" />
+                  {item.icon}
                   {item.name}
                 </Link>
               )
@@ -90,38 +106,24 @@ export default function DashboardLayout({
           </nav>
 
           <div className="border-t border-border p-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-auto w-full justify-start gap-3 rounded-xl px-3 py-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 font-medium text-primary">
-                    {user?.email?.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex flex-col items-start text-left">
-                    <span className="text-sm font-medium">{user?.email?.split('@')[0]}</span>
-                    <span className="text-xs text-muted-foreground">{user?.email}</span>
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 rounded-xl">
-                <DropdownMenuItem asChild className="rounded-lg">
-                  <Link href="/dashboard/profile">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="rounded-lg">
-                  <Link href="/">
-                    <Compass className="mr-2 h-4 w-4" />
-                    Back to Home
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout} className="rounded-lg text-destructive">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-9 h-9 bg-muted rounded-lg flex items-center justify-center text-sm font-medium text-foreground">
+                {user?.email?.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">{user?.email?.split('@')[0]}</p>
+                <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Sign out
+            </button>
           </div>
         </div>
       </aside>
@@ -129,20 +131,27 @@ export default function DashboardLayout({
       {/* Mobile Header */}
       <div className="flex flex-1 flex-col">
         <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 lg:hidden">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
-              <span className="font-serif text-lg font-medium text-primary-foreground">t</span>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
+              <span className="text-background font-bold text-sm">T</span>
             </div>
-            <span className="font-serif text-xl">thendo</span>
+            <span className="font-semibold text-lg text-foreground">Thendo</span>
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-xl"
+          <button
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+            {mobileMenuOpen ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </header>
 
         {/* Mobile Menu */}
@@ -156,13 +165,13 @@ export default function DashboardLayout({
                     key={item.name}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors ${
+                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
                       isActive
-                        ? 'bg-primary/10 font-medium text-primary'
+                        ? 'bg-foreground text-background font-medium'
                         : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     }`}
                   >
-                    <item.icon className="h-5 w-5" />
+                    {item.icon}
                     {item.name}
                   </Link>
                 )
@@ -170,10 +179,12 @@ export default function DashboardLayout({
               <div className="my-2 border-t border-border" />
               <button
                 onClick={handleLogout}
-                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm text-destructive transition-colors hover:bg-muted"
+                className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-destructive hover:bg-muted transition-colors"
               >
-                <LogOut className="h-5 w-5" />
-                Sign Out
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Sign out
               </button>
             </nav>
           </div>

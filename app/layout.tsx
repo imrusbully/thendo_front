@@ -1,22 +1,17 @@
 import type { Metadata } from 'next'
-import { DM_Sans, Playfair_Display } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/lib/auth-context'
 import './globals.css'
 
-const dmSans = DM_Sans({ 
+const inter = Inter({ 
   subsets: ["latin"],
-  variable: '--font-dm-sans',
-})
-
-const playfair = Playfair_Display({ 
-  subsets: ["latin"],
-  variable: '--font-playfair',
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
-  title: 'Thendo - Discover Your Perfect Moments',
-  description: 'Thendo helps you discover personalized activities and experiences based on your preferences, mood, and lifestyle.',
+  title: 'Thendo - Smart Activity Recommendations',
+  description: 'Discover personalized activities and experiences tailored to your preferences, mood, and lifestyle.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -43,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${playfair.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} bg-background`}>
       <body className="font-sans antialiased">
         <AuthProvider>
           {children}
