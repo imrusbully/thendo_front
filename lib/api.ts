@@ -21,7 +21,7 @@ interface MeResponse {
 
 interface PaymentsMeResponse {
   plan: 'FREE' | 'PREMIUM'
-  status: 'PENDING' | 'ACTIVE' | 'GRACE' | 'CANCELLED' | 'EXPIRED'
+  status: 'CREATED' | 'PROVIDER_CREATED' | 'COMPLETED' | 'FAILED' | 'EXPIRED'
   currentPeriodEnd: string
   entitlements: {
     premium: boolean
