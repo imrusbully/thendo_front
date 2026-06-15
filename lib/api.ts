@@ -19,17 +19,33 @@ interface MeResponse {
   status: 'ACTIVE' | 'INACTIVE'
 }
 
+interface UsageQuotaResponse {
+  remaining: number
+  periodStart: string
+  periodEnd: string
+}
+
+interface Entitlements {
+  premium: boolean
+  unlimited: boolean
+  monthlyLimit: number
+}
+
 interface PaymentsMeResponse {
   plan: 'FREE' | 'PREMIUM'
-  status: 'CREATED' | 'PROVIDER_CREATED' | 'COMPLETED' | 'FAILED' | 'EXPIRED'
+  status:
+    | 'PENDING'
+    | 'ACTIVE'
+    | 'GRACE'
+    | 'CANCELED'
+    | 'EXPIRED'
+    | 'CREATED'
+    | 'PROVIDER_CREATED'
+    | 'COMPLETED'
+    | 'FAILED'
   currentPeriodEnd: string
-  entitlements: {
-    premium: boolean
-    monthlyCredits: number
-  }
-  creditBalance: {
-    balance: number
-  }
+  entitlements: Entitlements
+  quota: UsageQuotaResponse
 }
 
 interface SessionView {
@@ -42,6 +58,7 @@ interface SessionView {
 
 interface CheckoutResponse {
   attemptId: string
+  checkoutId: string
   checkoutUrl: string
 }
 
@@ -199,6 +216,12 @@ class ApiClient {
     })
   }
 
+  async cancelSubscription(): Promise<void> {
+    return this.request<void>('/api/v1/subscription/cancel', {
+      method: 'POST',
+    })
+  }
+
   isAuthenticated(): boolean {
     return !!this.getAccessToken()
   }
@@ -212,5 +235,7 @@ export type {
   MeResponse, 
   PaymentsMeResponse, 
   SessionView,
-  CheckoutResponse 
+  CheckoutResponse,
+  Entitlements,
+  UsageQuotaResponse
 }
