@@ -126,7 +126,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Activity Showcase - scroll-driven diagonal image blocks */}
+        {/* Activity Showcase - compact category tiles */}
         <ActivityShowcase />
 
         {/* Features */}
