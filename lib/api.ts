@@ -44,8 +44,9 @@ interface PaymentsMeResponse {
     | 'COMPLETED'
     | 'FAILED'
   currentPeriodEnd: string
+  cancelAtPeriodEnd: boolean
   entitlements: Entitlements
-  quota: UsageQuotaResponse
+  quota: UsageQuotaResponse | null
 }
 
 interface SessionView {
