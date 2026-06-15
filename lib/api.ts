@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080'
 
 interface AuthResponse {
   accessToken: string
@@ -33,7 +33,16 @@ interface Entitlements {
 
 interface PaymentsMeResponse {
   plan: 'FREE' | 'PREMIUM'
-  status: 'PENDING' | 'ACTIVE' | 'GRACE' | 'CANCELED' | 'EXPIRED'
+  status:
+    | 'PENDING'
+    | 'ACTIVE'
+    | 'GRACE'
+    | 'CANCELED'
+    | 'EXPIRED'
+    | 'CREATED'
+    | 'PROVIDER_CREATED'
+    | 'COMPLETED'
+    | 'FAILED'
   currentPeriodEnd: string
   entitlements: Entitlements
   quota: UsageQuotaResponse
