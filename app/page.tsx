@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
-import { ActivityShowcase } from '@/components/activity-showcase'
 
 const features = [
   {
@@ -125,9 +124,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* Activity Showcase - compact category tiles */}
-        <ActivityShowcase />
 
         {/* Features */}
         <section id="features" className="py-20 sm:py-28 bg-card border-y border-border">
