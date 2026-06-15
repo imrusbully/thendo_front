@@ -6,6 +6,7 @@ import Link from 'next/link'
 export default function DashboardPage() {
   const { user, subscription } = useAuth()
 
+  const isUnlimited = subscription?.entitlements?.unlimited
   const stats = [
     {
       name: 'Plan',
@@ -13,13 +14,13 @@ export default function DashboardPage() {
       description: 'Current plan',
     },
     {
-      name: 'Credits',
-      value: subscription?.creditBalance?.balance?.toString() || '100',
-      description: 'Available this month',
+      name: 'Remaining',
+      value: isUnlimited ? '∞' : (subscription?.quota?.remaining?.toString() ?? '—'),
+      description: 'Suggestions left',
     },
     {
       name: 'Limit',
-      value: subscription?.entitlements?.monthlyCredits?.toString() || '100',
+      value: isUnlimited ? 'Unlimited' : (subscription?.entitlements?.monthlyLimit?.toString() ?? '—'),
       description: 'Monthly limit',
     },
   ]
