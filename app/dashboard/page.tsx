@@ -39,7 +39,7 @@ export default function DashboardPage() {
       {/* Stats */}
       <div className="grid sm:grid-cols-3 gap-4">
         {stats.map((stat) => (
-          <div key={stat.name} className="p-6 rounded-xl border border-border bg-card">
+          <div key={stat.name} className="p-6 rounded-2xl border border-border bg-card shadow-soft">
             <p className="text-sm text-muted-foreground">{stat.name}</p>
             <p className="mt-2 text-3xl font-semibold text-foreground">{stat.value}</p>
             <p className="mt-1 text-xs text-muted-foreground">{stat.description}</p>
@@ -49,7 +49,7 @@ export default function DashboardPage() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Quick Actions */}
-        <div className="p-6 rounded-xl border border-border bg-card">
+        <div className="p-6 rounded-2xl border border-border bg-card shadow-soft">
           <h2 className="text-lg font-semibold text-foreground">Quick Actions</h2>
           <p className="mt-1 text-sm text-muted-foreground">Manage your account</p>
           
@@ -85,7 +85,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent Activity */}
-        <div className="p-6 rounded-xl border border-border bg-card">
+        <div className="p-6 rounded-2xl border border-border bg-card shadow-soft">
           <h2 className="text-lg font-semibold text-foreground">Recent Activity</h2>
           <p className="mt-1 text-sm text-muted-foreground">Your latest actions</p>
           
@@ -118,8 +118,9 @@ export default function DashboardPage() {
 
       {/* Upgrade CTA */}
       {subscription?.plan === 'FREE' && (
-        <div className="p-8 rounded-xl bg-foreground">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="relative overflow-hidden p-8 rounded-2xl bg-gradient-to-br from-foreground to-foreground/85 shadow-glow">
+          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-gradient-to-br from-accent-from to-accent-to opacity-25 blur-3xl animate-blob" aria-hidden="true" />
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h2 className="text-xl font-semibold text-background">
                 Unlock unlimited suggestions
@@ -130,7 +131,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/pricing"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-foreground bg-background rounded-lg hover:opacity-90 transition-opacity shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-foreground bg-background rounded-lg hover:opacity-90 transition-opacity shrink-0 shadow-soft"
             >
               Upgrade now
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

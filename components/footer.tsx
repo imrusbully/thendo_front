@@ -7,13 +7,13 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
-                <span className="text-background font-bold text-sm">T</span>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to shadow-glow">
+                <span className="text-white font-bold text-sm">T</span>
               </div>
               <span className="font-semibold text-lg text-foreground">Thendo</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Smart activity recommendations powered by your preferences.
+              Discover activities you will love — AI-crafted picks, local gems, and effortless planning, all in one place.
             </p>
           </div>
 

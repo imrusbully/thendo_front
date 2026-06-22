@@ -78,8 +78,8 @@ export default function DashboardLayout({
         <div className="flex h-full flex-col">
           <div className="flex h-16 items-center gap-2 border-b border-border px-6">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
-                <span className="text-background font-bold text-sm">T</span>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to shadow-glow">
+                <span className="text-white font-bold text-sm">T</span>
               </div>
               <span className="font-semibold text-lg text-foreground">Thendo</span>
             </Link>
@@ -132,8 +132,8 @@ export default function DashboardLayout({
       <div className="flex flex-1 flex-col">
         <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
-              <span className="text-background font-bold text-sm">T</span>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to shadow-glow">
+              <span className="text-white font-bold text-sm">T</span>
             </div>
             <span className="font-semibold text-lg text-foreground">Thendo</span>
           </Link>

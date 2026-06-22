@@ -33,17 +33,9 @@ interface Entitlements {
 
 interface PaymentsMeResponse {
   plan: 'FREE' | 'PREMIUM'
-  status:
-    | 'PENDING'
-    | 'ACTIVE'
-    | 'GRACE'
-    | 'CANCELED'
-    | 'EXPIRED'
-    | 'CREATED'
-    | 'PROVIDER_CREATED'
-    | 'COMPLETED'
-    | 'FAILED'
+  status: 'PENDING' | 'ACTIVE' | 'GRACE' | 'CANCELED' | 'EXPIRED'
   currentPeriodEnd: string
+  cancelAtPeriodEnd: boolean
   entitlements: Entitlements
   quota: UsageQuotaResponse
 }
@@ -190,6 +182,10 @@ class ApiClient {
     this.clearTokens()
   }
 
+  async logoutOthers(): Promise<void> {
+    await this.request<void>('/api/v1/auth/logout/others', { method: 'POST' })
+  }
+
   // User
   async getMe(): Promise<MeResponse> {
     return this.request<MeResponse>('/api/v1/me')
@@ -218,6 +214,12 @@ class ApiClient {
 
   async cancelSubscription(): Promise<void> {
     return this.request<void>('/api/v1/subscription/cancel', {
+      method: 'POST',
+    })
+  }
+
+  async resumeSubscription(): Promise<void> {
+    return this.request<void>('/api/v1/subscription/resume', {
       method: 'POST',
     })
   }

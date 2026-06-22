@@ -71,8 +71,8 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8">
             <Link href="/" className="inline-flex items-center gap-2">
-              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
-                <span className="text-background font-bold text-sm">T</span>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to shadow-glow">
+                <span className="text-white font-bold text-sm">T</span>
               </div>
               <span className="font-semibold text-lg text-foreground">Thendo</span>
             </Link>
@@ -114,7 +114,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-11 px-4 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-11 px-4 text-sm font-medium text-primary-foreground bg-primary rounded-full hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -159,7 +159,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading || otpCode.length !== 6}
-                className="w-full h-11 px-4 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-11 px-4 text-sm font-medium text-primary-foreground bg-primary rounded-full hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -212,10 +212,12 @@ export default function LoginPage() {
       </div>
 
       {/* Right side - Visual */}
-      <div className="hidden lg:flex flex-1 bg-card border-l border-border items-center justify-center p-12">
-        <div className="max-w-md text-center">
-          <div className="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-2xl flex items-center justify-center">
-            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="relative hidden lg:flex flex-1 bg-card border-l border-border items-center justify-center p-12 overflow-hidden">
+        <div className="absolute inset-0 bg-mesh opacity-80" aria-hidden="true" />
+        <div className="absolute -top-24 -right-16 w-96 h-96 rounded-full bg-gradient-to-br from-accent-from to-accent-to opacity-25 blur-3xl animate-blob" aria-hidden="true" />
+        <div className="relative max-w-md text-center">
+          <div className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to text-white shadow-glow">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
@@ -223,7 +225,7 @@ export default function LoginPage() {
             Discover activities you will love
           </h2>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Our AI learns your preferences to suggest personalized experiences. 
+            Our AI learns your preferences to suggest personalized experiences.
             No more endless scrolling or decision fatigue.
           </p>
         </div>
