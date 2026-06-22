@@ -289,10 +289,22 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Our Mission — dark + numbered + giant heading */}
-        <section className="bg-ink pt-20 pb-0 sm:pt-28">
+        {/* Our Mission — dark + numbered + banner heading */}
+        <section className="bg-ink py-20 sm:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-            <div className="grid sm:grid-cols-3 gap-px bg-white/10 border border-white/10 mb-14">
+            <div className="grid lg:grid-cols-2 gap-10 items-end mb-14">
+              <h2 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-accent leading-[0.9]">
+                Our
+                <br />
+                Mission
+              </h2>
+              <p className="text-white/70 text-lg max-w-sm lg:ml-auto leading-relaxed">
+                Turning &ldquo;what should we do?&rdquo; into a confident answer — for everyone,
+                everywhere, in seconds.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-px bg-white/10 border border-white/10">
               {mission.map((m) => (
                 <div key={m.no} className="bg-ink p-7">
                   <div className="text-accent text-2xl font-bold mb-4">{m.no}</div>
@@ -300,11 +312,6 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-4">
-            <h2 className="text-[18vw] leading-[0.85] font-bold tracking-tighter text-accent">
-              Our Mission
-            </h2>
           </div>
         </section>
 

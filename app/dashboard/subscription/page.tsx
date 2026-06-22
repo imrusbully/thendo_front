@@ -97,39 +97,40 @@ export default function SubscriptionPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Subscription</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-2">Billing</p>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Subscription</h1>
         <p className="mt-1 text-sm text-muted-foreground">Manage your plan and billing</p>
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl border border-destructive/20 bg-destructive/5 text-sm text-destructive">
+        <div className="p-4 border border-destructive/20 bg-destructive/5 text-sm text-destructive">
           {error}
         </div>
       )}
 
       {/* Current Plan */}
-      <div className="relative p-6 rounded-2xl border border-border bg-card shadow-soft">
+      <div className="relative p-6 border border-foreground/12 bg-card">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Current plan</h2>
+            <h2 className="text-lg font-bold text-foreground">Current plan</h2>
             <p className="mt-1 text-sm text-muted-foreground">Your subscription details</p>
           </div>
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full ${statusStyle.pill}`}>
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider ${statusStyle.pill}`}>
             <span className={`w-1.5 h-1.5 rounded-full ${statusStyle.dot}`} />
             {statusKey}
           </span>
         </div>
 
         <div className="mt-6">
-          <div className="flex items-center justify-between p-6 rounded-xl border border-border bg-background/50">
+          <div className="flex items-center justify-between p-6 border border-foreground/12 bg-background/50">
             <div className="flex items-center gap-4">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${isPremium ? 'bg-gradient-to-br from-accent-from to-accent-to text-white shadow-glow' : 'bg-foreground text-background'}`}>
+              <div className={`w-12 h-12 flex items-center justify-center ${isPremium ? 'bg-accent text-accent-foreground' : 'bg-foreground text-background'}`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
               </div>
               <div>
-                <p className="text-2xl font-semibold text-foreground">{subscription?.plan || 'FREE'}</p>
+                <p className="text-2xl font-bold text-foreground">{subscription?.plan || 'FREE'}</p>
                 <p className="text-sm text-muted-foreground">
                   {isPremium ? '$9/month' : 'Free forever'}
                 </p>
@@ -139,7 +140,7 @@ export default function SubscriptionPage() {
               <button
                 onClick={handleUpgrade}
                 disabled={isLoading}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-accent-foreground bg-accent hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {isLoading ? (
                   <>
@@ -161,7 +162,7 @@ export default function SubscriptionPage() {
             ) : (
               <Link
                 href="/pricing"
-                className="px-4 py-2 text-sm font-medium text-foreground border border-border rounded-lg hover:bg-muted transition-colors"
+                className="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-foreground border border-foreground/20 hover:bg-muted transition-colors"
               >
                 View plans
               </Link>
@@ -169,7 +170,7 @@ export default function SubscriptionPage() {
           </div>
 
           {subscription?.currentPeriodEnd && (
-            <div className="mt-4 flex items-center gap-3 p-4 rounded-xl border border-border bg-background/50">
+            <div className="mt-4 flex items-center gap-3 p-4 border border-foreground/12 bg-background/50">
               <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
@@ -184,7 +185,7 @@ export default function SubscriptionPage() {
 
           {/* Restore subscription (premium + scheduled-for-cancel) */}
           {isPremium && cancelAtPeriodEnd && (
-            <div className="mt-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/5">
+            <div className="mt-4 p-4 border border-amber-500/30 bg-amber-500/5">
               <div className="flex items-start gap-3">
                 <svg className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01M4.93 19h14.14a2 2 0 001.74-2.99l-7.07-12.25a2 2 0 00-3.48 0L3.19 16.01A2 2 0 004.93 19z" />
@@ -198,7 +199,7 @@ export default function SubscriptionPage() {
                   <button
                     onClick={handleResume}
                     disabled={isResuming}
-                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg bg-gradient-to-br from-accent-from to-accent-to hover:opacity-90 transition-opacity disabled:opacity-50 shadow-glow"
+                    className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-accent-foreground bg-accent hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
                     {isResuming ? (
                       <>
@@ -233,7 +234,7 @@ export default function SubscriptionPage() {
                   Cancel subscription
                 </button>
               ) : (
-                <div className="p-4 rounded-xl border border-destructive/20 bg-destructive/5">
+                <div className="p-4 border border-destructive/20 bg-destructive/5">
                   <p className="text-sm font-medium text-foreground">Cancel your Premium plan?</p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     You will keep access until the end of your current billing period.
@@ -242,7 +243,7 @@ export default function SubscriptionPage() {
                     <button
                       onClick={handleCancel}
                       disabled={isCanceling}
-                      className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-destructive-foreground bg-destructive rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-destructive-foreground bg-destructive hover:opacity-90 transition-opacity disabled:opacity-50"
                     >
                       {isCanceling ? (
                         <>
@@ -259,7 +260,7 @@ export default function SubscriptionPage() {
                     <button
                       onClick={() => setShowCancelConfirm(false)}
                       disabled={isCanceling}
-                      className="px-4 py-2 text-sm font-medium text-foreground border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-50"
+                      className="px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-foreground border border-foreground/20 hover:bg-muted transition-colors disabled:opacity-50"
                     >
                       Keep plan
                     </button>
@@ -270,7 +271,7 @@ export default function SubscriptionPage() {
           )}
 
           {isCanceled && (
-            <div className="mt-4 p-4 rounded-xl border border-border bg-muted/40 text-sm text-muted-foreground">
+            <div className="mt-4 p-4 border border-foreground/12 bg-muted/40 text-sm text-muted-foreground">
               Your subscription is canceled and will not renew.
             </div>
           )}
@@ -278,19 +279,19 @@ export default function SubscriptionPage() {
       </div>
 
       {/* Usage */}
-      <div className="p-6 rounded-2xl border border-border bg-card shadow-soft">
-        <h2 className="text-lg font-semibold text-foreground">Usage</h2>
+      <div className="p-6 border border-foreground/12 bg-card">
+        <h2 className="text-lg font-bold text-foreground">Usage</h2>
         <p className="mt-1 text-sm text-muted-foreground">Your suggestions this period</p>
 
         <div className="mt-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-from to-accent-to flex items-center justify-center text-white">
+            <div className="w-12 h-12 bg-accent flex items-center justify-center text-accent-foreground">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
             <div>
-              <p className="text-3xl font-semibold text-foreground">
+              <p className="text-4xl font-bold tracking-tight text-foreground">
                 {isUnlimited ? '∞' : remaining}
                 {!isUnlimited && (
                   <span className="text-lg font-normal text-muted-foreground">
@@ -310,9 +311,9 @@ export default function SubscriptionPage() {
                 <span className="text-muted-foreground">Used this period</span>
                 <span className="font-medium text-foreground">{usagePercent.toFixed(0)}%</span>
               </div>
-              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-muted overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-accent-from to-accent-to rounded-full transition-all"
+                  className="h-full bg-accent transition-all"
                   style={{ width: `${usagePercent}%` }}
                 />
               </div>
@@ -328,17 +329,17 @@ export default function SubscriptionPage() {
 
       {/* Upgrade CTA for Free users */}
       {!isPremium && (
-        <div className="relative overflow-hidden p-8 rounded-2xl bg-gradient-to-br from-foreground to-foreground/85 shadow-glow">
-          <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-gradient-to-br from-accent-from to-accent-to opacity-30 blur-3xl animate-blob" />
+        <div className="relative overflow-hidden p-8 bg-ink">
+          <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-accent opacity-30 blur-3xl animate-blob" />
           <div className="relative">
-            <h2 className="text-xl font-semibold text-background">Unlock Premium</h2>
-            <p className="mt-2 text-sm text-background/70">
+            <h2 className="text-2xl font-bold tracking-tight text-white">Unlock Premium</h2>
+            <p className="mt-2 text-sm text-white/70">
               Get unlimited discoveries and exclusive features
             </p>
 
             <ul className="mt-6 space-y-3">
               {premiumFeatures.map((feature) => (
-                <li key={feature} className="flex items-center gap-3 text-background">
+                <li key={feature} className="flex items-center gap-3 text-white">
                   <svg className="w-4 h-4 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
@@ -350,7 +351,7 @@ export default function SubscriptionPage() {
             <button
               onClick={handleUpgrade}
               disabled={isLoading}
-              className="mt-8 w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-foreground bg-background rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="mt-8 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-accent-foreground bg-accent hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {isLoading ? (
                 <>

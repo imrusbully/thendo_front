@@ -92,10 +92,10 @@ export default function DashboardLayout({
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                  className={`flex items-center gap-3 px-3 py-2.5 text-sm transition-colors border-l-2 ${
                     isActive
-                      ? 'bg-foreground text-background font-medium'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                      ? 'border-accent bg-muted text-foreground font-semibold'
+                      : 'border-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
                   }`}
                 >
                   {item.icon}
@@ -107,7 +107,7 @@ export default function DashboardLayout({
 
           <div className="border-t border-border p-4">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 bg-muted rounded-lg flex items-center justify-center text-sm font-medium text-foreground">
+              <div className="w-9 h-9 bg-accent flex items-center justify-center text-sm font-bold text-accent-foreground">
                 {user?.email?.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
@@ -117,7 +117,7 @@ export default function DashboardLayout({
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -138,7 +138,7 @@ export default function DashboardLayout({
             <span className="font-bold text-lg tracking-tight text-foreground">thendo</span>
           </Link>
           <button
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            className="p-2 hover:bg-muted transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -165,10 +165,10 @@ export default function DashboardLayout({
                     key={item.name}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                    className={`flex items-center gap-3 px-3 py-2.5 text-sm transition-colors border-l-2 ${
                       isActive
-                        ? 'bg-foreground text-background font-medium'
-                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                        ? 'border-accent bg-muted text-foreground font-semibold'
+                        : 'border-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
                     }`}
                   >
                     {item.icon}
@@ -179,7 +179,7 @@ export default function DashboardLayout({
               <div className="my-2 border-t border-border" />
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-destructive hover:bg-muted transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-destructive hover:bg-muted transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

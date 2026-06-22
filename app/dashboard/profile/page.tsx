@@ -59,40 +59,41 @@ export default function ProfilePage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Profile</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-2">Account</p>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Profile</h1>
         <p className="mt-1 text-sm text-muted-foreground">Manage your account settings</p>
       </div>
 
       {/* Account Info */}
-      <div className="p-6 rounded-xl border border-border bg-card">
-        <h2 className="text-lg font-semibold text-foreground">Account Information</h2>
+      <div className="p-6 border border-foreground/12 bg-card">
+        <h2 className="text-lg font-bold text-foreground">Account Information</h2>
         <p className="mt-1 text-sm text-muted-foreground">Your account details</p>
-        
+
         <div className="mt-6 space-y-3">
-          <div className="flex items-center justify-between p-4 rounded-lg border border-border">
+          <div className="flex items-center justify-between p-4 border border-foreground/12">
             <div>
               <p className="text-xs text-muted-foreground">Email</p>
               <p className="text-sm font-medium text-foreground">{user?.email}</p>
             </div>
           </div>
-          <div className="flex items-center justify-between p-4 rounded-lg border border-border">
+          <div className="flex items-center justify-between p-4 border border-foreground/12">
             <div>
               <p className="text-xs text-muted-foreground">User ID</p>
               <p className="text-xs font-mono text-muted-foreground">{user?.userId}</p>
             </div>
           </div>
-          <div className="flex items-center justify-between p-4 rounded-lg border border-border">
+          <div className="flex items-center justify-between p-4 border border-foreground/12">
             <div>
               <p className="text-xs text-muted-foreground">Role</p>
-              <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground rounded">
+              <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground">
                 {user?.role}
               </span>
             </div>
           </div>
-          <div className="flex items-center justify-between p-4 rounded-lg border border-border">
+          <div className="flex items-center justify-between p-4 border border-foreground/12">
             <div>
               <p className="text-xs text-muted-foreground">Status</p>
-              <span className={`inline-flex items-center px-2 py-0.5 text-xs font-medium rounded ${
+              <span className={`inline-flex items-center px-2 py-0.5 text-xs font-medium ${
                 user?.status === 'ACTIVE' ? 'bg-accent/10 text-accent' : 'bg-muted text-muted-foreground'
               }`}>
                 {user?.status}
@@ -103,15 +104,15 @@ export default function ProfilePage() {
       </div>
 
       {/* Active Sessions */}
-      <div className="p-6 rounded-xl border border-border bg-card">
+      <div className="p-6 border border-foreground/12 bg-card">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Active Sessions</h2>
+            <h2 className="text-lg font-bold text-foreground">Active Sessions</h2>
             <p className="mt-1 text-sm text-muted-foreground">Manage your devices</p>
           </div>
           <button
             onClick={handleLogoutAll}
-            className="px-3 py-1.5 text-xs font-medium text-destructive border border-destructive/30 rounded-lg hover:bg-destructive/10 transition-colors"
+            className="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-destructive border border-destructive/30 hover:bg-destructive/10 transition-colors"
           >
             Sign out all
           </button>
@@ -134,10 +135,10 @@ export default function ProfilePage() {
               {sessions.map((session) => (
                 <div
                   key={session.sessionId}
-                  className="flex items-center justify-between p-4 rounded-lg border border-border"
+                  className="flex items-center justify-between p-4 border border-foreground/12"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                    <div className="w-10 h-10 bg-muted flex items-center justify-center">
                       {session.deviceId?.includes('mobile') ? (
                         <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -154,7 +155,7 @@ export default function ProfilePage() {
                           {session.deviceId?.slice(0, 8) || 'Unknown Device'}
                         </p>
                         {session.current && (
-                          <span className="px-2 py-0.5 text-xs font-medium bg-accent/10 text-accent rounded">
+                          <span className="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider bg-accent/10 text-accent">
                             Current
                           </span>
                         )}
@@ -168,7 +169,7 @@ export default function ProfilePage() {
                     <button
                       onClick={() => handleRevokeSession(session.sessionId)}
                       disabled={revokingSession === session.sessionId}
-                      className="p-2 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
+                      className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
                     >
                       {revokingSession === session.sessionId ? (
                         <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
