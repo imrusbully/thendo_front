@@ -95,8 +95,11 @@ export default function PricingPage() {
         <div className="absolute inset-x-0 top-0 h-[28rem] bg-mesh opacity-90 -z-10" aria-hidden="true" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
-              Simple <span className="text-gradient-accent">pricing</span>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-4">
+              Plans
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
+              Simple <span className="text-accent">pricing</span>
             </h1>
             <p className="mt-4 text-muted-foreground">
               Start free. Upgrade when you need more.
@@ -110,14 +113,14 @@ export default function PricingPage() {
               return (
                 <div
                   key={plan.name}
-                  className={`relative flex flex-col rounded-2xl border p-8 transition-shadow ${
+                  className={`relative flex flex-col border p-8 transition-colors ${
                     plan.popular
-                      ? 'border-transparent bg-card shadow-glow ring-gradient-accent'
-                      : 'border-border bg-card shadow-soft'
+                      ? 'border-accent bg-card'
+                      : 'border-foreground/15 bg-card'
                   }`}
                 >
                   {plan.popular && (
-                    <div className="absolute -top-3 left-6 px-3 py-1 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-accent-from to-accent-to">
+                    <div className="absolute -top-3 left-6 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent-foreground bg-accent">
                       Popular
                     </div>
                   )}
@@ -149,9 +152,9 @@ export default function PricingPage() {
                     {plan.code === 'FREE' ? (
                       <Link
                         href="/login"
-                        className={`inline-flex items-center justify-center w-full h-11 px-4 text-sm font-medium border border-border rounded-full transition-colors ${
-                          isCurrentPlan 
-                            ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+                        className={`inline-flex items-center justify-center w-full h-11 px-4 text-xs font-semibold uppercase tracking-wider border border-foreground/20 transition-colors ${
+                          isCurrentPlan
+                            ? 'bg-muted text-muted-foreground cursor-not-allowed'
                             : 'text-foreground hover:bg-muted'
                         }`}
                       >
@@ -161,10 +164,10 @@ export default function PricingPage() {
                       <button
                         onClick={handleUpgrade}
                         disabled={isLoading || isCurrentPlan}
-                        className={`inline-flex items-center justify-center w-full h-11 px-4 text-sm font-medium rounded-full transition-all ${
+                        className={`inline-flex items-center justify-center w-full h-11 px-4 text-xs font-semibold uppercase tracking-wider transition-all ${
                           isCurrentPlan
                             ? 'bg-muted text-muted-foreground cursor-not-allowed'
-                            : 'text-white bg-gradient-to-br from-accent-from to-accent-to hover:opacity-90 shadow-glow'
+                            : 'text-accent-foreground bg-accent hover:opacity-90'
                         }`}
                       >
                         {isLoading ? (
@@ -190,14 +193,14 @@ export default function PricingPage() {
 
           {/* FAQ */}
           <div className="max-w-2xl mx-auto mt-24">
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground text-center mb-12">
               Frequently asked questions
             </h2>
-            
-            <div className="space-y-4">
+
+            <div className="space-y-3">
               {faqs.map((faq) => (
-                <div key={faq.question} className="p-6 rounded-2xl border border-border bg-card shadow-soft">
-                  <h3 className="font-medium text-foreground">{faq.question}</h3>
+                <div key={faq.question} className="p-6 border border-foreground/12 bg-card">
+                  <h3 className="font-semibold text-foreground">{faq.question}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                     {faq.answer}
                   </p>

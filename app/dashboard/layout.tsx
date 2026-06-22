@@ -77,11 +77,11 @@ export default function DashboardLayout({
       <aside className="hidden w-64 shrink-0 border-r border-border bg-card lg:block">
         <div className="flex h-full flex-col">
           <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to shadow-glow">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 flex items-center justify-center bg-accent">
                 <span className="text-white font-bold text-sm">T</span>
               </div>
-              <span className="font-semibold text-lg text-foreground">Thendo</span>
+              <span className="font-bold text-lg tracking-tight text-foreground">thendo</span>
             </Link>
           </div>
 
@@ -131,11 +131,11 @@ export default function DashboardLayout({
       {/* Mobile Header */}
       <div className="flex flex-1 flex-col">
         <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 lg:hidden">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-accent-from to-accent-to shadow-glow">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 flex items-center justify-center bg-accent">
               <span className="text-white font-bold text-sm">T</span>
             </div>
-            <span className="font-semibold text-lg text-foreground">Thendo</span>
+            <span className="font-bold text-lg tracking-tight text-foreground">thendo</span>
           </Link>
           <button
             className="p-2 rounded-lg hover:bg-muted transition-colors"
