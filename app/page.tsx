@@ -125,11 +125,61 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Image placeholder block */}
-              <div className="relative aspect-[4/5] sm:aspect-[4/3] lg:aspect-[3/4] overflow-hidden bg-ink">
+              {/* App showcase block */}
+              <div className="relative aspect-[4/5] sm:aspect-[4/3] lg:aspect-[3/4] overflow-hidden bg-ink flex flex-col justify-between p-6">
                 <div className="absolute inset-0 bg-mesh opacity-50" aria-hidden="true" />
                 <div className="absolute -top-20 -right-16 w-80 h-80 rounded-full bg-accent opacity-40 blur-3xl animate-blob" aria-hidden="true" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+
+                {/* Mock app suggestion card */}
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-wider text-white/70">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                      Tonight for you
+                    </span>
+                    <span className="text-[0.65rem] font-semibold uppercase tracking-wider text-white/40">
+                      98% match
+                    </span>
+                  </div>
+
+                  <div className="bg-white/10 backdrop-blur border border-white/15 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[0.6rem] font-semibold uppercase tracking-wider text-accent">
+                          Outdoor · 2h · 1.2km away
+                        </p>
+                        <h3 className="mt-1.5 text-lg font-bold text-white leading-tight">
+                          Sunset rooftop &amp; live jazz
+                        </h3>
+                      </div>
+                      <div className="w-9 h-9 shrink-0 flex items-center justify-center bg-accent text-accent-foreground">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex items-center gap-2">
+                      <button className="flex-1 py-2 text-[0.65rem] font-semibold uppercase tracking-wider bg-accent text-accent-foreground">
+                        Let&apos;s go
+                      </button>
+                      <button className="px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-wider border border-white/20 text-white/80">
+                        Skip
+                      </button>
+                    </div>
+                  </div>
+
+                  <blockquote className="mt-5 border-l-2 border-accent pl-3">
+                    <p className="text-white/80 text-sm italic leading-relaxed">
+                      &ldquo;It picked the one night I&apos;ll never forget.&rdquo;
+                    </p>
+                    <footer className="mt-1 text-[0.65rem] font-semibold uppercase tracking-wider text-white/40">
+                      — Maya R., early user
+                    </footer>
+                  </blockquote>
+                </div>
+
+                {/* Footer stat */}
+                <div className="relative">
                   <span className="inline-block px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider bg-accent text-accent-foreground">
                     Live now
                   </span>
